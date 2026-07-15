@@ -1,0 +1,15 @@
+{
+  "name": "bfg-renderer",
+  "version": "1.0.0",
+  "description": "BeachfrontGrado Playwright Renderer",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "playwright install chromium"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "playwright": "^1.54.2"
+  }
+}
