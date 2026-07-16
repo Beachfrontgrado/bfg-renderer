@@ -54,19 +54,6 @@ app.get("/render", async (req, res) => {
     const browser = await getBrowser();
 
     page = await browser.newPage({
-await page.route("**/*", (route) => {
-  const type = route.request().resourceType();
-
-  if (
-    type === "image" ||
-    type === "font" ||
-    type === "media"
-  ) {
-    return route.abort();
-  }
-
-  return route.continue();
-});
       viewport: {
         width: 1440,
         height: 2000,
@@ -75,6 +62,20 @@ await page.route("**/*", (route) => {
       userAgent:
         "Mozilla/5.0 (compatible; BeachfrontGradoBot/1.0)",
 
+    });
+
+    await page.route("**/*", (route) => {
+      const type = route.request().resourceType();
+
+      if (
+        type === "image" ||
+        type === "font" ||
+        type === "media"
+      ) {
+        return route.abort();
+      }
+
+      return route.continue();
     });
 
     await page.goto(url, {
