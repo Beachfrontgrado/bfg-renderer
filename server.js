@@ -54,7 +54,19 @@ app.get("/render", async (req, res) => {
     const browser = await getBrowser();
 
     page = await browser.newPage({
+await page.route("**/*", (route) => {
+  const type = route.request().resourceType();
 
+  if (
+    type === "image" ||
+    type === "font" ||
+    type === "media"
+  ) {
+    return route.abort();
+  }
+
+  return route.continue();
+});
       viewport: {
         width: 1440,
         height: 2000,
