@@ -66,16 +66,19 @@ app.get("/render", async (req, res) => {
     });
 
     await page.goto(url, {
+  waitUntil: "domcontentloaded",
+  timeout: 120000,
+});
 
-      waitUntil: "networkidle",
+// React/Vite Zeit zum Rendern geben
+await page.waitForTimeout(5000);
 
-      timeout: 120000,
+// Warten bis mindestens eine Überschrift vorhanden ist
+await page.waitForSelector("h1", {
+  timeout: 10000,
+}).catch(() => {});
 
-    });
-
-    await page.waitForTimeout(3000);
-
-    const html = await page.content();
+const html = await page.content();
 
     res.setHeader(
       "Content-Type",
